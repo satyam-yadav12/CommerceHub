@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify
 from ..extensions import db
 from sqlalchemy import text
+from ..responses.success import create_success_response
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -9,6 +10,17 @@ auth_bp = Blueprint("auth", __name__)
 def check_health():
     try:
         db.session.execute(text("SELECT 1"))
-        return jsonify({"msg": "database connected successfully"}), 200
+        return create_success_response(
+            200,
+            "sql connected successfully",
+        )
     except Exception as e:
-        return jsonify({"msg": str(e)})
+        raise Exception(e)
+
+
+@auth_bp.route("/check", methods=["GET"])
+def check_route():
+    try:
+        return create_success_response(200, "response created successfull")
+    except Exception as e:
+        raise Exception(e)

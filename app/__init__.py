@@ -2,6 +2,7 @@ from flask import Flask
 from .config import Config
 from .extensions import db
 from dotenv import load_dotenv
+from .responses.errors import register_error_handler
 
 
 def Create_app():
@@ -12,6 +13,8 @@ def Create_app():
     # start extensions by extension.init(app)
 
     db.init_app(app)
+
+    register_error_handler(app)
 
     # register important services like cloudinary, google client
     # register_blueprints
