@@ -4,7 +4,7 @@ from ..utils.responses.errors import ApiError
 from flask_jwt_extended import create_access_token
 
 
-def register_admin_service(data):
+def register_admin_service(data):  # TODO: Test the Function Logic
     if not data["username"] or not data["password"]:
         raise ApiError(400, "Username and password required", "Invalid data")
     hash = generate_password_hash(data["password"])
@@ -14,7 +14,7 @@ def register_admin_service(data):
     return None
 
 
-def admin_login_service(data):
+def admin_login_service(data):  # TODO: test the function through PostMan
     if not data["username"] or not data["password"]:
         raise ApiError(400, "Username and password required", "Invalid data")
 
@@ -29,3 +29,26 @@ def admin_login_service(data):
 
     response = {"username": data["username"], "access_token": access_token}
     return response
+
+"""
+ {"title" : data.get("title"), 
+ "description": data.get("description"),
+   "category": data.get('category_id')}
+"""
+def add_product_service(data):  # TODO: complete the function
+
+    parsed_data = prepare_img_data(data)
+
+    result = add_product_db(parsed_data)
+    
+    return result
+
+
+def prepare_img_data(data):
+  
+    product = {
+        "product_title": data.get("title"),
+        "product_description": data.get("description"),
+        "category_id":data.get("category"),
+    }
+    return product

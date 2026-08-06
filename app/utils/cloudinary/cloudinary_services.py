@@ -4,7 +4,7 @@ import cloudinary.uploader
 # upload product image
 
 
-def upload_product_image(img, public_name):  # public_name is product id
+def upload_product_image_cloudinary(img, public_name):  # public_name is product id
     upload_results = cloudinary.uploader.upload(
         img,
         public_id=public_name,
@@ -13,9 +13,13 @@ def upload_product_image(img, public_name):  # public_name is product id
         invalidate=True,
         resource_type="auto",
     )
+    originalUrl = upload_results["secure_url"]
+
+    thumbUrl = originalUrl.replace("/upload/", "/upload/c_thumb,w_300/")
     return {
         "msg": "image uploaded successfull",
         "uri": upload_results["secure_url"],
+        "thumb_uri" : thumbUrl,
         "img_height": upload_results["height"],
         "img_width": upload_results["width"],
         "public_id": upload_results["public_id"],

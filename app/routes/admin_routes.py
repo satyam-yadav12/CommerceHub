@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from ..controllers.admin_controllers import (
     register_admin_controller,
     admin_login_controller,
+    add_product_controller,
 )
 
 admin = Blueprint("admin", __name__)
@@ -16,3 +17,8 @@ def register_admin():
 @admin.route("/login", methods=["POST"])
 def admin_login():
     return admin_login_controller()
+
+
+@admin.route("/add-product", methods=["POST"])
+def add_product():
+    return add_product_controller()
