@@ -14,8 +14,11 @@ from ..utils.cloudinary.cloudinary_services import (
     upload_product_image_cloudinary,
     destroy_product_image,
 )
-from ..utils.database.product_operations_database import add_category_db
-
+from ..utils.database.product_operations_database import (
+    add_category_db,
+    fetch_products_list_db,
+    fetch_single_product,
+)
 
 def register_admin_controller():
     data = request.get_json()
@@ -112,3 +115,22 @@ def add_product_controller():
     result = add_product_service(required)
 
     return create_success_response(201, "product added successfully", result)
+
+
+def fetch_all_products_controller(category):
+    
+    # admin authentication logic
+    # fetch products service
+    # fetch products db logic
+    result  = fetch_products_list_db(category)
+    # prepare data to show
+    return create_success_response(200, "product fetch successsul", result)
+
+def fetch_product_with_id(product_id):
+    #admin authentication logic
+    #fetch products services
+    #fetch product db logic
+    result  = fetch_single_product(product_id)
+
+    #prepare data to show
+    return  create_success_response(200, "product fetch successfully", result)
